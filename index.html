@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontpage</title>
+    <meta
+      name="description"
+      content="Frontpage is a personalized feed reader for tech content."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#feed" aria-label="Frontpage home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span>Frontpage</span>
+        </a>
+        <nav class="primary-nav" aria-label="Product navigation">
+          <button class="top-nav-link active" type="button" data-view="Feed" aria-pressed="true">
+            Feed <span class="nav-saved-count"><i data-lucide="bookmark" aria-hidden="true"></i><b data-section-count="feed">0</b></span>
+          </button>
+          <button class="top-nav-link" type="button" data-view="Digest" aria-pressed="false">
+            Digest <span class="nav-saved-count"><i data-lucide="bookmark" aria-hidden="true"></i><b data-section-count="digest">0</b></span>
+          </button>
+          <button class="top-nav-link" type="button" data-view="Discover" aria-pressed="false">
+            Discover <span class="nav-saved-count"><i data-lucide="bookmark" aria-hidden="true"></i><b data-section-count="discover">0</b></span>
+          </button>
+        </nav>
+        <div class="topbar-tools">
+          <label class="search-wrap" aria-label="Search articles">
+            <i class="search-icon" data-lucide="search" aria-hidden="true"></i>
+            <input id="searchInput" type="search" placeholder="Search articles..." />
+            <kbd>/</kbd>
+          </label>
+          <button class="icon-button add-button" type="button" aria-label="Add a feed"><i data-lucide="plus" aria-hidden="true"></i></button>
+          <button class="avatar" id="openAccountButton" type="button" aria-label="Account: guest">MS</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar" aria-label="Feed navigation">
+          <nav class="sidebar-nav" aria-label="Reading lists">
+            <button class="nav-item active" type="button" data-category="All Items">
+              <i class="nav-icon" data-lucide="inbox" aria-hidden="true"></i>
+              <span>All Items</span>
+              <strong id="allCount">0</strong>
+            </button>
+            <button class="nav-item" type="button" data-category="Saved">
+              <i class="nav-icon" data-lucide="bookmark" aria-hidden="true"></i>
+              <span>Saved</span>
+              <strong id="savedCount">0</strong>
+            </button>
+          </nav>
+
+          <div class="category-navigation">
+            <p class="section-heading">Categories</p>
+            <div id="feedList" class="feed-list"></div>
+          </div>
+
+          <div class="health-status" id="healthStatus"><span class="health-check" aria-hidden="true">✓</span> Connecting to feeds...</div>
+        </aside>
+
+        <main class="main-panel" id="feed">
+          <div class="view-panel" id="viewPanel">
+          <section class="feed-heading">
+            <div class="heading-title">
+              <h1 id="viewTitle">All Items</h1>
+              <span><strong id="unreadCount">0</strong> unread</span>
+              <p class="view-description" id="viewDescription" hidden></p>
+            </div>
+            <div class="feed-actions">
+              <div class="view-switcher" aria-label="Feed layout">
+                <button class="view-button active" type="button" aria-label="List view"><i data-lucide="list" aria-hidden="true"></i></button>
+                <button class="view-button" type="button" aria-label="Grid view"><i data-lucide="layout-grid" aria-hidden="true"></i></button>
+                <button class="view-button" type="button" aria-label="Compact view"><i data-lucide="rows-3" aria-hidden="true"></i></button>
+              </div>
+              <button class="toolbar-button sort-button" id="sortButton" type="button" aria-label="Sort newest first"><i data-lucide="arrow-down-wide-narrow" aria-hidden="true"></i> Newest</button>
+              <button class="toolbar-button" id="refreshButton" type="button"><i data-lucide="refresh-cw" aria-hidden="true"></i> Refresh</button>
+              <button class="toolbar-button mark-read-button" id="markReadButton" type="button">Mark all read</button>
+            </div>
+          </section>
+
+          <div class="new-items-banner"><i data-lucide="radio" aria-hidden="true"></i> <strong>Live feeds</strong> <span id="updatedAt">Connecting to sources...</span></div>
+          <section class="article-region" aria-label="Articles">
+            <div class="day-label" id="articleSectionLabel">Today</div>
+            <div id="articleList" class="article-list" aria-live="polite"></div>
+          </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <dialog class="reader-dialog" id="articleDialog" aria-labelledby="readerTitle">
+      <div class="reader-dialog-content">
+        <header class="reader-dialog-header">
+          <div class="reader-source-line">
+            <span id="readerSource"></span>
+            <span aria-hidden="true">·</span>
+            <time id="readerDate"></time>
+          </div>
+          <button class="icon-button reader-close" id="closeReaderButton" type="button" aria-label="Close article">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </header>
+        <h2 id="readerTitle"></h2>
+        <p class="reader-author" id="readerAuthor"></p>
+        <div class="reader-body" id="readerBody"></div>
+        <a class="reader-source-link" id="readerSourceLink" href="#" target="_blank" rel="noopener noreferrer">
+          Read at the original source <i data-lucide="external-link" aria-hidden="true"></i>
+        </a>
+      </div>
+    </dialog>
+
+    <dialog class="account-dialog" id="accountDialog" aria-labelledby="accountTitle">
+      <div class="account-dialog-content">
+        <header class="account-dialog-header">
+          <div>
+            <p class="account-eyebrow">Frontpage account</p>
+            <h2 id="accountTitle">Sign in</h2>
+          </div>
+          <button class="icon-button" id="closeAccountButton" type="button" aria-label="Close account dialog">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </header>
+        <p class="account-description" id="accountDescription">Sign in to sync your reading data across devices.</p>
+        <p class="account-user" id="accountUser" hidden></p>
+        <form id="accountForm">
+          <label class="account-field" id="displayNameField" hidden>
+            <span>Name</span>
+            <input id="accountName" name="name" type="text" autocomplete="name" />
+          </label>
+          <label class="account-field">
+            <span>Email</span>
+            <input id="accountEmail" name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="account-field" id="passwordField">
+            <span>Password</span>
+            <input id="accountPassword" name="password" type="password" autocomplete="current-password" minlength="8" required />
+          </label>
+          <button class="primary-btn account-submit" id="accountSubmit" type="submit">Sign in</button>
+        </form>
+        <div class="account-actions">
+          <button class="account-text-button" id="accountModeButton" type="button">Create an account</button>
+          <button class="account-text-button" id="resetPasswordButton" type="button">Forgot password?</button>
+          <button class="account-text-button" id="signOutButton" type="button" hidden>Sign out</button>
+        </div>
+        <p class="account-status" id="accountStatus" role="status" aria-live="polite"></p>
+      </div>
+    </dialog>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

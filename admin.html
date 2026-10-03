@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Frontpage Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="admin.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+    <script type="module" src="admin.js"></script>
+  </head>
+  <body class="admin-body">
+    <div class="admin-shell">
+      <header class="admin-header">
+        <a class="brand" href="/" aria-label="Back to Frontpage">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span>Frontpage <span class="admin-word">Admin</span></span>
+        </a>
+        <div class="admin-header-actions">
+          <span id="adminIdentity" class="admin-identity">Checking access</span>
+          <button class="toolbar-button" id="adminRefreshButton" type="button"><i data-lucide="refresh-cw" aria-hidden="true"></i> Refresh</button>
+          <button class="toolbar-button" id="adminSignOutButton" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <section class="admin-heading">
+          <div>
+            <p class="admin-eyebrow">Platform overview</p>
+            <h1>Analytics</h1>
+          </div>
+          <p id="adminUpdatedAt" class="admin-updated">Loading analytics...</p>
+        </section>
+
+        <section class="admin-stats" aria-label="Key metrics">
+          <article class="metric-panel"><span>Registered users</span><strong id="totalUsers">—</strong><small>Firebase accounts</small></article>
+          <article class="metric-panel"><span>Users active today</span><strong id="todayVisitors">—</strong><small>Unique Firebase sessions</small></article>
+          <article class="metric-panel"><span>Feeds synced</span><strong id="feedsSynced">—</strong><small>Across latest user snapshots</small></article>
+          <article class="metric-panel"><span>Articles stored</span><strong id="storedArticles">—</strong><small>Latest per-user snapshots</small></article>
+          <article class="metric-panel"><span>Feed fetches today</span><strong id="fetchCount">—</strong><small>Successful sync snapshots</small></article>
+        </section>
+
+        <section class="chart-grid" aria-label="Activity charts">
+          <article class="chart-panel chart-panel-wide">
+            <div class="chart-heading"><h2>Visits and feed fetches</h2><span>Last 7 days</span></div>
+            <div class="chart-canvas"><canvas id="activityChart" aria-label="Line chart of visits and feed fetches" role="img"></canvas></div>
+          </article>
+          <article class="chart-panel">
+            <div class="chart-heading"><h2>Articles fetched</h2><span>Last 7 days</span></div>
+            <div class="chart-canvas"><canvas id="articlesChart" aria-label="Area chart of articles fetched" role="img"></canvas></div>
+          </article>
+          <article class="chart-panel">
+            <div class="chart-heading"><h2>Top searches</h2><span>Most searched terms</span></div>
+            <div class="chart-canvas"><canvas id="searchChart" aria-label="Bar chart of popular search terms" role="img"></canvas></div>
+          </article>
+        </section>
+
+        <section class="admin-tables">
+          <article class="table-panel">
+            <div class="chart-heading"><h2>Most saved feeds</h2><span id="savedFeedCount">0 sources</span></div>
+            <div class="table-scroll"><table><thead><tr><th>Source</th><th>Category</th><th>Saves</th></tr></thead><tbody id="savedFeedRows"></tbody></table></div>
+          </article>
+          <article class="table-panel">
+            <div class="chart-heading"><h2>Recent users</h2><span id="recentUserCount">0 accounts</span></div>
+            <div class="table-scroll"><table><thead><tr><th>Email</th><th>Last active</th><th>Articles</th></tr></thead><tbody id="recentUserRows"></tbody></table></div>
+          </article>
+        </section>
+
+        <p class="admin-status" id="adminStatus" role="status" aria-live="polite"></p>
+      </main>
+    </div>
+  </body>
+</html>
